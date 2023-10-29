@@ -21,26 +21,27 @@ class ShopViewDataSource: NSObject, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: CarsTableViewCell.reuseIdentifier, for: indexPath) as! CarsTableViewCell
         
         var car = cars[indexPath.row]
-        
-        cell.configureCell(with: car)
-        var tapped = 0
+                
+        if let carCell = carsBasket.first(where: {$0.id == car.id}){
+            car.num = carCell.num
+        }else{
+            car.num = 0
+        }
         
         cell.addButtonTaped = {
-            if tapped == 0{
+            if car.num == 0{
                 
-                tapped += 1
                 car.num += 1
                 self.carsBasket.append(car)
                 
             }else{
-                tapped += 1
+                
                 car.num += 1
-                
                 self.carsBasket.removeAll{$0.id == car.id}
-                
                 self.carsBasket.append(car)
             }
         }
+        cell.configureCell(with: car)
         return cell
     }
     

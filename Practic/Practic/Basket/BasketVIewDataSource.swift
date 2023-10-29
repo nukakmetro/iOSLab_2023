@@ -24,12 +24,16 @@ class BasketViewDataSource {
                     self.carsBasket.removeAll{$0.id == newCar.id}
                     self.carsBasket.append(newCar)
                     cell.numLabel.text = String(newCar.num)
+                    cell.buttonMinus.isHidden = true
                 }else if newCar.num == 1{
                     newCar.num -= 1
                     cell.numLabel.text = String(newCar.num)
                     self.carsBasket.removeAll{$0.id == newCar.id}
+                    cell.buttonMinus.isHidden = false
+
                    // хотел уведомление подключить
                 }
+                self.reloadSnapshot()
             }
 
             cell.addButtonTaped = {
@@ -65,6 +69,12 @@ class BasketViewDataSource {
     
     func getSizeCars() -> Int{
         return carsBasket.count
+    }
+    
+    func reloadSnapshot(){
+        var snapshot = dataSource?.snapshot()
+        snapshot?.reloadItems(carsBasket)
+        dataSource?.apply(snapshot!, animatingDifferences: true)
     }
 }
 

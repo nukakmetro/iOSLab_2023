@@ -47,7 +47,7 @@ class CarsinTheBasketTableViewCell: UITableViewCell {
         return button
     }()
     
-    private lazy var buttonMinus: UIButton = {
+     lazy var buttonMinus: UIButton = {
         
             let action = UIAction{_ in
                 self.minusButtonTapped!()
